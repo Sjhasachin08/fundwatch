@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --bg:#0A0D14; --bg-2:#0D1119;
+  --surface: rgba(23,28,41,0.62); --surface-solid:#171C29;
+  --surface-2: rgba(30,36,52,0.55);
+  --border: rgba(255,255,255,0.08); --border-soft: rgba(255,255,255,0.05);
+  --gold:#F2B84B; --green:#22C55E; --red:#F0475C; --blue:#5AA9FF; --orange:#F59E0B;
+  --text:#E9ECF4; --text-dim:#8B93A7; --text-faint:#5B6376;
+  --radius:16px;
+  --mono: 'IBM Plex Mono', monospace;
+  --display: 'Space Grotesk', sans-serif;
+  --body: 'Inter', sans-serif;
+}
+.lt{
+  --bg:#F3F4F8; --bg-2:#ECEEF4;
+  --surface: rgba(255,255,255,0.75); --surface-solid:#FFFFFF;
+  --surface-2: rgba(255,255,255,0.55);
+  --border: rgba(20,25,40,0.09); --border-soft: rgba(20,25,40,0.05);
+  --text:#161A25; --text-dim:#5A6272; --text-faint:#9199A9;
+}
+body{ background:var(--bg); color:var(--text); font-family:var(--body); margin:0; }
+.mf-mono{ font-family:var(--mono); }
+.mf-display{ font-family:var(--display); }
+.glass{
+  background:var(--surface); border:1px solid var(--border);
+  -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+  border-radius: var(--radius);
+}
+.glass-solid{ background:var(--surface-solid); border:1px solid var(--border); border-radius:var(--radius); }
+
+/* .glass uses backdrop-filter, which creates its own stacking context per card. Without this,
+   a chart tooltip that overflows below its card renders BEHIND the next card instead of on top
+   of it (later siblings always paint over earlier ones once each has its own stacking context).
+   Raising z-index on hover/focus lifts the active card above whatever comes after it. */
+.glass:hover, .glass:focus-within { position: relative; z-index: 40; }
+
+/* Recharts renders its tooltip in a wrapper positioned relative to the chart — make sure it
+   always sits above the chart's own bars/lines/grid and any nearby content within the card. */
+.recharts-tooltip-wrapper { z-index: 50; }
+.scrollbar-thin::-webkit-scrollbar{ width:6px; height:6px; }
+.scrollbar-thin::-webkit-scrollbar-thumb{ background:var(--border); border-radius:4px; }
+.scrollbar-thin::-webkit-scrollbar-track{ background:transparent; }
+@keyframes countup{ from{ opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+.countup{ animation: countup 0.4s ease both; }
+.row-hover:hover{ background: var(--surface-2); }
+::selection{ background: var(--gold); color:#0A0D14; }
